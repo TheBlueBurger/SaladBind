@@ -6,6 +6,7 @@ const inquirer = require('inquirer');
 const fetch = require("node-fetch");
 const open = require("open");
 const si = require("systeminformation");
+const config = require("./config")
 process.on("uncaughtException", err => {
 	try {
 	console.log(chalk.bold.red("An unexpected error occured! Technical details:\n" + err.message));
@@ -77,7 +78,7 @@ const updateCheck = new Promise((resolve, reject) => {
 	updateCheck.then(() => {
 		if(!CLImode) {
 			console.log(chalk.bold.green(`SaladBind v${packageJson.version}`))
-			if(!fs.existsSync('./data/config.json')) {
+			if(config.configCreated) {
 				console.log("Looks like this is your first time using SaladBind!\nLet's set it up. :)\n");
 				require("./setup").run(false);
 			} else {

@@ -3,7 +3,11 @@ const fs = require("fs");
 class Config {
     constructor() {
         this.path = "./data/config.json";
-        if (!fs.existsSync(this.path)) fs.writeFileSync(this.path, JSON.stringify({}))
+        this.configCreated = false;
+        if (!fs.existsSync(this.path)) {
+            fs.writeFileSync(this.path, JSON.stringify({}));
+            this.configCreated = true;
+        }
     }
     get(property) {
         const rawData = fs.readFileSync(this.path);

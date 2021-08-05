@@ -11,13 +11,11 @@ const decompressTargz = require('decompress-targz');
 const decompressUnzip = require('decompress-unzip');
 const mv = require('mv'); //what i forogt to save :bukky:
 const { menu } = require('./index');
-let tempest = "./data/config.json";
-let rawdata = fs.readFileSync(tempest);
-const config = JSON.parse(rawdata);
+const config = require("./config")
 const { win32 } = require('path');
 const { spawn } = require("child_process");
 let spinner;
-let isDev = config.dev != undefined && config.dev == true;
+let isDev = config.get("dev") != undefined && config.get("dev") == "true";
 
 function moveDupeFolder(folderName) {
 	let folderData = fs.readdirSync(`./data/miners/${folderName}`)
@@ -347,16 +345,16 @@ async function startMiner(minerData, algo, pool, region, advancedCommands) {
 	if (minerData.parameters.wallet != "") { // poo
 		if(minerData.parameters.wallet == "PHOENIX") {
 			if(algo == "ethash") {
-				defaultArgs.wallet = `-wal ${wallet}.${config.minerId}`
+				defaultArgs.wallet = `-wal ${wallet}.${config.get("minerId")}`
 				defaultArgs.algo = `-coin eth`
 				defaultArgs.pool = `${minerData.parameters.pool} ${pool.algos[algo].host.replace("REGION", region)}${minerData.miner == "PhoenixMiner" && pool.name == "NiceHash" ? " -proto 4 " : ""}${minerData.miner == "PhoenixMiner" && hasAMD ? " -clKernel 0 " : ""}${minerData.miner == "lolMiner" ? " --pers BgoldPoW " : ""}`
 			} else if(algo == "etchash") {
-				defaultArgs.wallet = `-wal ${wallet}.${config.minerId}`
+				defaultArgs.wallet = `-wal ${wallet}.${config.get("minerId")}`
 				defaultArgs.algo = `-coin etc`
 				defaultArgs.pool = `${minerData.parameters.pool} ${pool.algos[algo].host.replace("REGION", region)}${minerData.miner == "PhoenixMiner" && pool.name == "NiceHash" ? " -proto 4 " : ""}${minerData.miner == "PhoenixMiner" && hasAMD ? " -clKernel 0 " : ""}${minerData.miner == "lolMiner" ? " --pers BgoldPoW " : ""}`
 			}
 		} else {
-			defaultArgs.wallet = `${minerData.parameters.wallet} ${wallet}.${config.minerId}`
+			defaultArgs.wallet = `${minerData.parameters.wallet} ${wallet}.${config.get("minerId")}`
 			if (minerData.parameters.algo != "") {
 				defaultArgs.algo = `${minerData.parameters.algo} ${minerData.miner == "lolMiner" ? algo == "beamv3" ? "BEAM-III" : algo.toUpperCase() : algo}`
 			} else {
@@ -372,7 +370,7 @@ async function startMiner(minerData, algo, pool, region, advancedCommands) {
 		let restOfPool = poolUrl.split("://")[1].replace("REGION", region)
 		defaultArgs = {
 			"algo": "",
-			"pool": `${minerData.parameters.pool} ${poolScheme}://${wallet}.${config.minerId}@${restOfPool}`,
+			"pool": `${minerData.parameters.pool} ${poolScheme}://${wallet}.${config.get("minerId")}@${restOfPool}`,
 			"wallet": ""
 		} //thats behind the if statement
 		if (minerData.parameters.algo != "") {

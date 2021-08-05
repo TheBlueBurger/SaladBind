@@ -3,13 +3,14 @@ const chalk = require('chalk');
 const inquirer = require('inquirer');
 const fs = require('fs');
 const path = require('path');
+const config = require("./config")
 
 function run(clear) {
     if(clear == undefined || clear == true) {
         console.clear();
         console.log(chalk.bold.cyan(`Configure SaladBind`))
     }
-    if (fs.existsSync('./data/config.json')) {
+    if (!config.configCreated) {
         inquirer.prompt([{
             type: 'confirm',
             name: 'overwrite',
@@ -78,7 +79,7 @@ async function continueSetup(clear) {
         if (!fs.existsSync("./data")){
             fs.mkdirSync("./data");
         }
-        fs.writeFileSync("./data/config.json", JSON.stringify({"minerId": rigID}));
+        config.set("minerId", rigID)
         spinner.stop();
         console.clear();
         console.log(chalk.bold.greenBright(`Congratulations!! :D`))
@@ -108,7 +109,7 @@ async function continueSetup(clear) {
             if (!fs.existsSync("./data")){
                 fs.mkdirSync("./data");
             }
-            fs.writeFileSync("./data/config.json", JSON.stringify({"minerId": minerDetails.minerId}));
+            config.set("minerId", minerId)
             spinner.stop();
             console.clear();
             console.log(chalk.bold.greenBright(`Congratulations!! :D`))
@@ -139,7 +140,7 @@ async function continueSetup(clear) {
         if (!fs.existsSync("./data")){
             fs.mkdirSync("./data");
         }
-        fs.writeFileSync("./data/config.json", JSON.stringify({"minerId": worker.id}));
+        config.set("minerId", worker.id);
         spinner.stop();
         console.clear();
         console.log(chalk.bold.greenBright(`Congratulations!! :D`))
