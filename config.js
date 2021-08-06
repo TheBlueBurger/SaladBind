@@ -2,8 +2,9 @@ const fs = require("fs");
 
 class Config {
     constructor() {
-        this.path = "./data/config.json";
+        this.path = "./data/config.json"
         this.configCreated = false;
+        if(!fs.existsSync("./data")) fs.mkdirSync("./data")
         if (!fs.existsSync(this.path)) {
             fs.writeFileSync(this.path, JSON.stringify({}));
             this.configCreated = true;
