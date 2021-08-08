@@ -11,6 +11,10 @@ const presence = require("./presence.js");
 
 process.on("uncaughtException", err => { try { return } catch { return } })
 
+process.on("beforeExit", () => {
+	presence.stop();
+})
+
 presence.state.on('ready', () => {
 
 	presence.enable();

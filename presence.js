@@ -1,5 +1,5 @@
 const RPC = require('discord-rpc');
-client = new RPC.Client({ transport: 'ipc' })
+let client = new RPC.Client({ transport: 'ipc' })
 
 
 const fs = require("fs");
@@ -76,5 +76,6 @@ module.exports = {
 	mainmenu: function() { presence("In main menu", "   ", null, "icon", "Join me on salad.com", "idle", "Not mining") },
 	configuring: function() { presence("Configuring miner", "   ", null, "icon", "Join me on salad.com", "idle", "Not mining") },
 	mine: function(miner) { presence(`Mining with ${miner}`, "   ", Date.now(), "icon", "Join me on salad.com", "mining", "Mining") },
+	stop: function() {client.destroy()},
 	state: client
 }
