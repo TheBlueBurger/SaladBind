@@ -336,13 +336,6 @@ async function prepStart(minerData, algo, pool, region, advancedCommands) {
 						type: "input",
 						message: "What name would you like to use?",
 						name: "name",
-						async validate(input) {
-							return data[input] && !(await inquirer.prompt({
-								type: "confirm",
-								message: "This name already exists, would you like to overwrite it?",
-								name: "override"
-							})).override ? "Cancelled" : true
-						}
 					});
 					fs.writeFileSync("data/saved-args.json", JSON.stringify({
 						...data,
