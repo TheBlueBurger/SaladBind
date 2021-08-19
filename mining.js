@@ -325,6 +325,7 @@ async function prepStart(minerData, algo, pool, region, advancedCommands) {
 					name: "advancedCommands",
 					message: "Enter arguments for miner",
 				});
+				if(advancedCommandsy.advancedCommands != "") {
 				let saveCommand = await inquirer.prompt({
 					type: "confirm",
 					default: "Y",
@@ -332,12 +333,25 @@ async function prepStart(minerData, algo, pool, region, advancedCommands) {
 					message: "Would you like to save the advanced args?"
 				});
 				if(saveCommand.saveArgs) {
-					let name = await inquirer.prompt({
-						type: "input",
-						message: "What name would you like to use?",
-						name: "name",
-					});
-					fs.writeFileSync("data/saved-args.json", JSON.stringify({
+					let name;
+					async function askName() {
+						name = await inquirer.prompt({
+							type: "input",
+							message: "What name would you like to use?",
+							name: "name",
+						});
+						if(data[name.name]) {
+							if(!(await inquirer.prompt({
+								type: "confirm",
+								message: "This name already exists, do you want to overwrite it?",
+								name: "overwrite",
+								default: false
+							})).overwrite) return await askName();
+						}
+					}
+					await askName();
+
+					if(name.name != "") fs.writeFileSync("data/saved-args.json", JSON.stringify({
 						...data,
 						[name.name]: {
 							data: advancedCommandsy.advancedCommands
@@ -345,6 +359,7 @@ async function prepStart(minerData, algo, pool, region, advancedCommands) {
 					}))
 				}
 				args = advancedCommandsy.advancedCommands;
+			} else args = "";
 			}
 			if (!fs.existsSync("data/saved-args.json")) fs.writeFileSync("data/saved-args.json", JSON.stringify({}));
 			let data;
