@@ -57,7 +57,8 @@ Discord Rich Presence Means that your discord friends and people in Discord serv
 			presence.disconnect();
 		}
 	});
-
+	
+	console.log(`Now it's time to get your Rig ID. This is needed in order for Salad to see which account to put the mined money in.`);
 
 	const promptResult = await inquirer.prompt([{
 		type: 'list',
