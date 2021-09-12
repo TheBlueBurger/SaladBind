@@ -42,7 +42,7 @@ ${chalk.greenBright.bold("Welcome to SaladBind!")}
 This is a program that makes it easier to select miner, algorithm and pool for Salad! All of the money you mine using SaladBind goes to Salad (except for the miner and pools devfees)
 All salad boosts and XP will work in SaladBind.
 
-Discord Rich Presence Means that your discord friends and people in Discord servers are going to see that you use SaladBind. They will see the SaladBind version, miner, algorithm and pool in your Discord profile.
+Discord Rich Presence means that your Discord friends and people in Discord servers are going to see that you use SaladBind. They will see your SaladBind version, miner, algorithm, and pool on your Discord profile.
 		`)
 	}
 	const discordPresencePrompt = await inquirer.prompt([{
