@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const presence = require("./presence.js")
 var isPresenceEnabled = false;
+let firstTime = false;
 
 function run(clear) {
 	if (clear == undefined || clear == true) {
@@ -26,6 +27,7 @@ function run(clear) {
 			}
 		});
 	} else {
+		firstTime = true;
 		continueSetup(clear);
 	}
 }
@@ -33,6 +35,15 @@ async function continueSetup(clear) {
 	if (clear == undefined || clear == true) {
 		console.clear();
 		console.log(chalk.bold.cyan(`Configure SaladBind`))
+	}
+	if(firstTime) {
+		console.log(`
+${chalk.greenBright.bold("Welcome to SaladBind!")}
+This is a program that makes it easier to select miner, algorithm and pool for Salad! All of the money you mine using SaladBind goes to Salad (except for the miner and pools devfees)
+All salad boosts and XP will work in SaladBind.
+
+Discord Rich Presence Means that your discord friends and people in Discord servers are going to see that you use SaladBind. They will see the SaladBind version, miner, algorithm and pool in your Discord profile.
+		`)
 	}
 	const discordPresencePrompt = await inquirer.prompt([{
 		type: 'confirm',
