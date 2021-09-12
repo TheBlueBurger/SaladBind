@@ -39,8 +39,7 @@ async function continueSetup(clear) {
 	if(firstTime) {
 		console.log(`
 ${chalk.greenBright.bold("Welcome to SaladBind!")}
-This is a program that makes it easier to select miner, algorithm and pool for Salad! All of the money you mine using SaladBind goes to Salad (except for the miner and pools devfees)
-All salad boosts and XP will work in SaladBind.
+This is a program that makes it easier to select miner, algorithm and pool for Salad! All of the money you mine using SaladBind goes to Salad, and all Salad boosts and XP will work in SaladBind.
 
 Discord Rich Presence means that your Discord friends and people in Discord servers are going to see that you use SaladBind. They will see your SaladBind version, miner, algorithm, and pool on your Discord profile.
 		`)
