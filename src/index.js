@@ -27,7 +27,22 @@ process.on("uncaughtException", err => {
 		}).then(out => {
 			if (out.exit == "exit" || out.exit == "") process.exit(1)
 			else if (out.exit == "write_log") {
-				fs.writeFileSync("saladbind_error.txt", `An error occurred.\nError: ${err}\n\nStacktrace: ${err.stack}\n\nDebug: ${JSON.stringify(getDebugData(), null, " ")}`);
+				try {
+
+					fs.writeFileSync("saladbind_error.txt", `An error occurred.\nError: ${err}\n\nStacktrace: ${err.stack}\n\nDebug: ${JSON.stringify(getDebugData(), null, " ")}`);
+					process.exit(1);
+				} catch {
+					try {
+						console.log("Could not get data/write to file, heres some debug data that can help you")
+						console.log(err.stack)
+						console.log(JSON.stringify(getDebugData()));
+						setInterval(() => {
+							// literally do nothing, make sure the user sees the error and it doesnt close instantly
+						}, 10000);
+					} catch {
+
+					}
+				}
 				process.exit(1);
 			}
 		})
