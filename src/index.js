@@ -79,7 +79,7 @@ function getDebugData() {
 			user: presence?.state?.user?.username
 		},
 		platform: process.platform,
-		miners: fs.readFileSync("./data/miners")
+		miners: miners
 	}
 }
 
