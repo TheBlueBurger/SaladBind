@@ -27,7 +27,7 @@ process.on("uncaughtException", err => {
 		}).then(out => {
 			if (out.exit == "exit" || out.exit == "") process.exit(1)
 			else if (out.exit == "write_log") {
-				fs.writeFileSync("saladbind_error.txt", `An error occurred.\nError: ${err}\n\nStacktrace: ${err.stack}\n\nDebug: ${JSON.stringify(getDebugData())}`);
+				fs.writeFileSync("saladbind_error.txt", `An error occurred.\nError: ${err}\n\nStacktrace: ${err.stack}\n\nDebug: ${JSON.stringify(getDebugData(), null, " ")}`);
 				process.exit(1);
 			}
 		})
@@ -82,7 +82,7 @@ function getDebugData() {
 		miners: miners
 	}
 }
-
+throw new Error("test") // i better not forget to remove this, this is just for testing
 presence.state.on('ready', () => {
 	presence.enable();
 	presence.mainmenu();
