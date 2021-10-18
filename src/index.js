@@ -51,6 +51,12 @@ const si = require("systeminformation");
 const update = require("./update.js")
 const presence = require("./presence.js");
 
+function getDebugData() {
+	return {
+		configured: fs.existsSync("data/config.json")
+	}
+}
+
 presence.state.on('ready', () => {
 	presence.enable();
 	presence.mainmenu();
